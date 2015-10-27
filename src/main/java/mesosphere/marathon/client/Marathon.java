@@ -13,6 +13,7 @@ import mesosphere.marathon.client.model.v2.GetAppTasksResponse;
 import mesosphere.marathon.client.model.v2.GetAppsResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionRegisterResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionsResponse;
+import mesosphere.marathon.client.model.v2.GetGroupsResponse;
 import mesosphere.marathon.client.model.v2.GetServerInfoResponse;
 import mesosphere.marathon.client.model.v2.GetTasksResponse;
 import mesosphere.marathon.client.model.v2.Group;
@@ -63,6 +64,9 @@ public interface Marathon {
 	
 	@RequestLine("GET /v2/groups/{id}")
 	Group getGroup(@Named("id") String id) throws MarathonException;
+	
+	@RequestLine("GET /v2/groups")
+	GetGroupsResponse getGroups() throws MarathonException;
 
     // Tasks
 
