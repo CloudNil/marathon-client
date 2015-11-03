@@ -173,5 +173,121 @@ public class App {
 	public String toString() {
 		return ModelUtils.toString(this);
 	}
+	
+	public static DockerAppBuilder dockerAppBuilder(String appId, String dockerImage, Double cpus, Double mem, Integer instances){
+		return new DockerAppBuilder(appId, dockerImage, cpus, mem, instances);
+	}
+	
+	public static class DockerAppBuilder {
 
+		private Collection<Port> portMappings = new ArrayList<Port>();
+		private List<Parameter> parameters = new ArrayList<Parameter>();
+		private String network = "BRIDGE";
+		private String appId = null;
+		private Integer instances = 1;
+		private String dockerImage = null;
+		private Double cpus = null;
+		private Double mem = null;
+		private boolean forcePullImage = false;
+		private boolean privileged = false;
+		private Collection<Volume> volumes = new ArrayList<Volume>();
+		
+		public  DockerAppBuilder(String appId, String dockerImage, Double cpus, Double mem, Integer instances) {
+			this.appId = appId;
+			this.dockerImage = dockerImage;
+			this.cpus = cpus;
+			this.mem = mem;
+			this.instances = instances;
+		}
+		
+		public DockerAppBuilder instances(Integer instances) {
+			this.instances = instances;
+			return this;
+		}
+		
+		public DockerAppBuilder paramter(String key, String value){
+			Parameter parameter = new Parameter(key, value);
+			parameters.add(parameter);
+			return this;
+		}
+		
+		public DockerAppBuilder volume(String containerPath, String hostPath, String mode){
+			Volume volume = new Volume();
+			volume.setContainerPath(containerPath);
+			volume.setHostPath(hostPath);
+			volume.setMode(mode);
+			volumes.add(volume);
+			return this;
+		}
+		
+		public DockerAppBuilder volume(String containerPath, String hostPath){
+			volume(containerPath, hostPath, null);
+			return this;
+		}
+
+		public DockerAppBuilder portMappings(Integer containerPort, Integer hostPort) {
+			Port port = buildPort(containerPort, hostPort);
+			portMappings.add(port);
+			return this;
+		}
+
+		public DockerAppBuilder portMappings(Integer containerPort) {
+			portMappings(containerPort, null);
+			return this;
+		}
+
+		private Port buildPort(Integer containerPort, Integer hostPort) {
+			Port port = new Port(containerPort);
+			port.setHostPort(hostPort);
+			return port;
+		}
+
+		public DockerAppBuilder network(String network) {
+			this.network = network;
+			return this;
+		}
+		
+		public DockerAppBuilder forcePullImage(boolean forcePullImage){
+			this.forcePullImage = forcePullImage;
+			return this;
+		}
+		
+		public DockerAppBuilder privileged(boolean privileged){
+			this.privileged = privileged;
+			return this;
+		}
+
+		public App build() {
+			Docker docker = new Docker();
+			docker.setImage(dockerImage);
+			docker.setForcePullImage(forcePullImage);
+			docker.setPrivileged(privileged);
+			docker.setNetwork(network);
+
+			if (!portMappings.isEmpty()) {
+				docker.setPortMappings(portMappings);
+			}
+			
+			if(!parameters.isEmpty()){
+				docker.setParameters(parameters);
+			}
+
+			Container container = new Container();
+			container.setType("DOCKER");
+			container.setDocker(docker);
+			
+			if(!volumes.isEmpty()){
+				container.setVolumes(volumes);
+			}
+
+			App app = new App();
+			app.setId(appId);
+			app.setInstances(instances);
+			app.setCpus(cpus);
+			app.setMem(mem);
+			app.setContainer(container);
+
+			return app;
+		}
+	}
 }
