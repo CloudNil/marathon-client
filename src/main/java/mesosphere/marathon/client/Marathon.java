@@ -98,6 +98,9 @@ public interface Marathon {
     // Server Info
     @RequestLine("GET /v2/info")
     GetServerInfoResponse getServerInfo();
+    
+    @RequestLine("GET /v2/leader")
+    GetServerInfoResponse getLeader();
 
     // Miscellaneous
 
