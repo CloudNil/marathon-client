@@ -1,45 +1,35 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com.github.mohitsoni</groupId>
+	<groupId>com.cloudnil</groupId>
 	<artifactId>marathon-client</artifactId>
 	<packaging>jar</packaging>
-	<version>0.4.3-SNAPSHOT</version>
+	<version>0.4.3</version>
 	<name>marathon-client</name>
 	<description>A Java API client for Mesosphere's Marathon.</description>
-	<url>https://github.com/mohitsoni/marathon-client</url>
+	<url>https://github.com/CloudNil/marathon-client</url>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-
+	<properties>
+		<feign.version>8.13.0</feign.version>
+		<jackson.version>2.6.3</jackson.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.netflix.feign</groupId>
 			<artifactId>feign-core</artifactId>
-			<version>${feign-version}</version>
+			<version>${feign.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.netflix.feign</groupId>
-			<artifactId>feign-gson</artifactId>
-			<version>${feign-version}</version>
+			<artifactId>feign-jackson</artifactId>
+			<version>${feign.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.3</version>
-		</dependency>
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-            <scope>test</scope>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 	</dependencies>
-
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -47,31 +37,19 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
 	<scm>
 		<tag>master</tag>
-		<url>git@github.com:mohitsoni/marathon-client.git</url>
-		<connection>scm:git:git@github.com:mohitsoni/marathon-client.git</connection>
-		<developerConnection>scm:git:git@github.com:mohitsoni/marathon-client.git</developerConnection>
+		<url>git@github.com:cloudnil/marathon-client.git</url>
+		<connection>scm:git:git@github.com:cloudnil/marathon-client.git</connection>
+		<developerConnection>scm:git:git@github.com:cloudnil/marathon-client.git</developerConnection>
 	</scm>
-
-	<issueManagement>
-		<system>Github issues</system>
-		<url>https://github.com/mohitsoni/marathon-client/issues</url>
-	</issueManagement>
-
 	<developers>
 		<developer>
-			<name>Mohit Soni</name>
-			<email>mohitsoni1989@gmail.com</email>
+			<name>cloudnil</name>
+			<email>cloudnil@126.com</email>
+			<organization>CloudNil</organization>
 		</developer>
 	</developers>
-
-	<properties>
-		<feign-version>8.11.0</feign-version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -79,8 +57,16 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>

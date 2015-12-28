@@ -7,9 +7,14 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import feign.Response;
 import feign.codec.ErrorDecoder;
-import feign.gson.GsonDecoder;
-import feign.gson.GsonEncoder;
-
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+/**
+ * <p>ClassName: MarathonClient</p>
+ * <p>Description: Marathon REST接口的实例工具类</p>
+ * @author 史绍虎
+ * <p>Date: 2015-11-16 下午5:28:33</p>
+ */
 public class MarathonClient {
 	static class MarathonHeadersInterceptor implements RequestInterceptor {
 		@Override
@@ -27,11 +32,9 @@ public class MarathonClient {
 	}
 	
 	public static Marathon getInstance(String endpoint) {
-		GsonDecoder decoder = new GsonDecoder(ModelUtils.GSON);
-		GsonEncoder encoder = new GsonEncoder(ModelUtils.GSON);
-		return Feign.builder().encoder(encoder).decoder(decoder)
-				.errorDecoder(new MarathonErrorDecoder())
-				.requestInterceptor(new MarathonHeadersInterceptor())
-				.target(Marathon.class, endpoint);
+		JacksonDecoder decoder = ModelUtils.decoder();
+		JacksonEncoder encoder = ModelUtils.encoder();
+		return Feign.builder().encoder(encoder).decoder(decoder).errorDecoder(new MarathonErrorDecoder())
+				.requestInterceptor(new MarathonHeadersInterceptor()).target(Marathon.class, endpoint);
 	}
 }
