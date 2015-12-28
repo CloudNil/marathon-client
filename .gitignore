@@ -8,6 +8,7 @@ http.log*
 
 # Folders
 target/
+src/main/java/META-INF
 
 # Eclipse files
 .classpath
