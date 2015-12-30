@@ -2,8 +2,6 @@ package cloudnil.marathon.client.model.v2;
 
 import cloudnil.marathon.client.utils.ModelUtils;
 
-import java.util.Collection;
-
 public class HealthCheck {
 	private String command;
 	private Integer gracePeriodSeconds;

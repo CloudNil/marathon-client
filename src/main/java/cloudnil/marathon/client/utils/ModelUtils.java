@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import feign.jackson.JacksonDecoder;
@@ -20,6 +21,7 @@ public class ModelUtils {
 	public static JacksonDecoder decoder() {
 		mapper.setSerializationInclusion(Include.NON_NULL);
 		mapper.getSerializationConfig().with(new SimpleDateFormat(DATE_TIME_FORMAT));
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); 
 		return new JacksonDecoder(mapper);
 	}
 	public static JacksonEncoder encoder() {

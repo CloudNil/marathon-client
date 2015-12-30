@@ -8,7 +8,11 @@
 	<name>marathon-client</name>
 	<description>A Java API client for Mesosphere's Marathon.</description>
 	<url>https://github.com/CloudNil/marathon-client</url>
-
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<properties>
 		<feign.version>8.13.0</feign.version>
 		<jackson.version>2.6.3</jackson.version>
