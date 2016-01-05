@@ -23,6 +23,10 @@ public class App {
 	private Integer tasksStaged;
 	private Integer tasksRunning;
 	private List<HealthCheck> healthChecks;
+	private Integer backoffSeconds;
+	private Double backoffFactor;
+	private Integer maxLaunchDelaySeconds;
+	private UpgradeStrategy upgradeStrategy;
 
 	public String getId() {
 		return id;
@@ -167,6 +171,38 @@ public class App {
 
 	public void setHealthChecks(List<HealthCheck> healthChecks) {
 		this.healthChecks = healthChecks;
+	}
+	
+	public Integer getBackoffSeconds() {
+		return backoffSeconds;
+	}
+
+	public void setBackoffSeconds(Integer backoffSeconds) {
+		this.backoffSeconds = backoffSeconds;
+	}
+
+	public Double getBackoffFactor() {
+		return backoffFactor;
+	}
+
+	public void setBackoffFactor(Double backoffFactor) {
+		this.backoffFactor = backoffFactor;
+	}
+
+	public Integer getMaxLaunchDelaySeconds() {
+		return maxLaunchDelaySeconds;
+	}
+
+	public void setMaxLaunchDelaySeconds(Integer maxLaunchDelaySeconds) {
+		this.maxLaunchDelaySeconds = maxLaunchDelaySeconds;
+	}
+
+	public UpgradeStrategy getUpgradeStrategy() {
+		return upgradeStrategy;
+	}
+
+	public void setUpgradeStrategy(UpgradeStrategy upgradeStrategy) {
+		this.upgradeStrategy = upgradeStrategy;
 	}
 
 	@Override
