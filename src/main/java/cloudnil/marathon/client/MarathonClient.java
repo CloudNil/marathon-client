@@ -6,6 +6,7 @@ import feign.Feign;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import feign.Response;
+import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -36,5 +37,13 @@ public class MarathonClient {
 		JacksonEncoder encoder = ModelUtils.encoder();
 		return Feign.builder().encoder(encoder).decoder(decoder).errorDecoder(new MarathonErrorDecoder())
 				.requestInterceptor(new MarathonHeadersInterceptor()).target(Marathon.class, endpoint);
+	}
+	
+	public static Marathon getInstance(String endpoint,String userName,String password) {
+		JacksonDecoder decoder = ModelUtils.decoder();
+		JacksonEncoder encoder = ModelUtils.encoder();
+		return Feign.builder().encoder(encoder).decoder(decoder).errorDecoder(new MarathonErrorDecoder())
+				.requestInterceptor(new MarathonHeadersInterceptor())
+				.requestInterceptor(new BasicAuthRequestInterceptor(userName, password)).target(Marathon.class, endpoint);
 	}
 }
